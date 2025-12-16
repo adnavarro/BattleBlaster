@@ -10,6 +10,13 @@ void ABattleBlasterGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	TArray<AActor*> OutTowers;
+	UGameplayStatics::GetAllActorsOfClass(this, ATower::StaticClass(),OutTowers);
+	TowerCount = OutTowers.Num();
+#if WITH_EDITOR
+	UE_LOG(LogTemp, Display, TEXT("Tower Count: %d"), TowerCount);
+#endif
+	
 	if (APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0))
 	{
 		if (ATank* FountTank = Cast<ATank>(PlayerPawn))
@@ -22,10 +29,14 @@ void ABattleBlasterGameMode::BeginPlay()
 		}
 	}
 	
-	TArray<AActor*> OutTowers;
-	UGameplayStatics::GetAllActorsOfClass(this, ATower::StaticClass(),OutTowers);
-	TowerCount = OutTowers.Num();
+	for (int32 i = 0; i < TowerCount; ++i)
+	{
+		if (ATower* Tower = Cast<ATower>(OutTowers[i]))
+		{
+			Tower->Tank = Tank;
 #if WITH_EDITOR
-	UE_LOG(LogTemp, Display, TEXT("Tower Count: %d"), TowerCount);
+			UE_LOG(LogTemp, Display, TEXT("%s Setting the tank variable"), *Tower->GetActorNameOrLabel());
 #endif
+		}
+	}
 }
