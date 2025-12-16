@@ -24,5 +24,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
+	UPROPERTY(EditAnywhere)
+	float FireRange = 700.f;
+	
 	TWeakObjectPtr<ATank> Tank;
 };
