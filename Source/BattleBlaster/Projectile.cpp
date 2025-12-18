@@ -10,6 +10,10 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	SetRootComponent(Projectile);
+	
+	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+	ProjectileMovementComp->InitialSpeed = 1200.f;
+	ProjectileMovementComp->MaxSpeed = 1200.f;
 }
 
 // Called when the game starts or when spawned
