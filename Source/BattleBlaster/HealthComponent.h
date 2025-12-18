@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BattleBlasterGameMode.h"
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
@@ -29,6 +30,8 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	float Health;
+	
+	TWeakObjectPtr<ABattleBlasterGameMode> BattleBlasterGameMode;
 	
 	UFUNCTION()
 	void OnDamageTaken(

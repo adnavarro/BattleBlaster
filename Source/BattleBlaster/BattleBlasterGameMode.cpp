@@ -40,3 +40,25 @@ void ABattleBlasterGameMode::BeginPlay()
 		}
 	}
 }
+
+void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
+{
+	if (DeadActor == Tank)
+	{
+		//Tank->HandleDestruction();
+		UE_LOG(LogTemp, Display, TEXT("Game Over! You Lose!"));
+	}
+	else
+	{
+		if (auto DeadTower = Cast<ATower>(DeadActor))
+		{
+			//DeadTower->HandleDestruction();
+			DeadTower->Destroy();
+			UE_LOG(LogTemp, Display, TEXT("Tower Destroyed!"));
+			if (--TowerCount == 0)
+			{
+				UE_LOG(LogTemp, Display, TEXT("Game Over! You Win!"));
+			}
+		}
+	}
+}
