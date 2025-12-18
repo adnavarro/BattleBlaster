@@ -74,3 +74,9 @@ void ATank::TurnInput(const FInputActionValue& Value)
 	DeltaRotation.Yaw = InputValue * TurnRate * GetWorld()->GetDeltaSeconds();
 	AddActorLocalRotation(DeltaRotation, true);
 }
+
+void ATank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	UE_LOG(LogTemp, Display, TEXT("Game Over! You Lose!"));
+}

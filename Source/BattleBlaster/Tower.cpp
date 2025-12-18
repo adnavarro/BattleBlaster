@@ -39,3 +39,10 @@ bool ATower::IsInFireRange()
 	}
 	return false;
 }
+
+void ATower::HandleDestruction()
+{
+	Super::HandleDestruction();
+	Destroy();
+	UE_LOG(LogTemp, Display, TEXT("Tower Destroyed!"));
+}

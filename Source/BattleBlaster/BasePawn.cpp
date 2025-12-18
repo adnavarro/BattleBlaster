@@ -38,6 +38,11 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 	TurretMesh->SetWorldRotation(InterpolatedRotation);
 }
 
+void ABasePawn::HandleDestruction()
+{
+	UE_LOG(LogTemp, Display, TEXT("Handle Destruction in Base Pawn"));
+}
+
 void ABasePawn::Fire()
 {
 	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();

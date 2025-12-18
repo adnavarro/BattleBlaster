@@ -34,6 +34,8 @@ public:
 	TSubclassOf<AProjectile> ProjectileClass;
 	
 	void RotateTurret(FVector LookAtTarget);
+
+	virtual void HandleDestruction();
 	
 	void Fire();
 };
