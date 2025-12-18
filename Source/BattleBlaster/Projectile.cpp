@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Kismet/GameplayStatics.h"
 #include "Projectile.h"
 
 // Sets default values
@@ -33,10 +33,20 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	FVector NormalImpulse, const FHitResult& Hit)
-{
-	if (OtherActor)
+{	
+	if (auto MyOwner = GetOwner())
 	{
-		UE_LOG(LogTemp, Display, TEXT("OtherActor name: %s"), *OtherActor->GetName());
+		if (OtherActor && (OtherActor != this) && (OtherActor != MyOwner))
+		{
+			UGameplayStatics::ApplyDamage(
+				OtherActor,
+				Damage,
+				MyOwner->GetInstigatorController(),
+				this,
+				UDamageType::StaticClass()
+				);
+		}
 	}
+	Destroy();
 }
 
