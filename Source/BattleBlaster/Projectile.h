@@ -25,9 +25,18 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> Projectile;
+	TObjectPtr<UStaticMeshComponent> ProjectileMesh;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComp;
 	
+	
+	UFUNCTION()
+	void OnHit(
+		UPrimitiveComponent* HitComp, 
+		AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, 
+		FVector NormalImpulse, 
+		const FHitResult& Hit
+		);
 };
