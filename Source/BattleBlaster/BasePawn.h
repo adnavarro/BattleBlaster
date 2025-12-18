@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "BasePawn.generated.h"
 
+class AProjectile;
+
 UCLASS()
 class BATTLEBLASTER_API ABasePawn : public APawn
 {
@@ -27,6 +29,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AProjectile> ProjectileClass;
 	
 	void RotateTurret(FVector LookAtTarget);
 	

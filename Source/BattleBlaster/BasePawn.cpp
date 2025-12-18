@@ -2,6 +2,7 @@
 
 
 #include "BasePawn.h"
+#include "Projectile.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -42,8 +43,6 @@ void ABasePawn::Fire()
 	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 	
-#if WITH_EDITOR
-	DrawDebugSphere(GetWorld(), SpawnLocation, 25.f, 12, FColor::Blue, false , 3.f);
-#endif
+	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
 }
 
