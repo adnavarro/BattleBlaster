@@ -24,8 +24,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRange = 700.f;
 	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float FireRate = 2.0f;
+	
 	TWeakObjectPtr<ATank> Tank;
+	
+	void CheckFireCondition();
+	
+	bool IsInFireRange();
 };
