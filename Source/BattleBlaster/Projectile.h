@@ -30,6 +30,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComp;
 	
+	UPROPERTY(EditAnywhere)
+	float Damage = 25.f;
 	
 	UFUNCTION()
 	void OnHit(
