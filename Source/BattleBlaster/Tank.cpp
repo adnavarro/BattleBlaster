@@ -16,8 +16,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
 		{
@@ -34,7 +34,7 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	if (auto PlayerController = Cast<APlayerController>(GetController()))
+	if (PlayerController)
 	{
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
@@ -78,5 +78,23 @@ void ATank::TurnInput(const FInputActionValue& Value)
 void ATank::HandleDestruction()
 {
 	Super::HandleDestruction();
-	UE_LOG(LogTemp, Display, TEXT("Game Over! You Lose!"));
+	bPlayerIsAlive = false;
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+	SetPlayerEnabled(false);
+}
+
+void ATank::SetPlayerEnabled(bool bIsPlayerEnabled)
+{
+	if (PlayerController)
+	{
+		if (bIsPlayerEnabled)
+		{
+			EnableInput(PlayerController);
+		}
+		else
+		{
+			DisableInput(PlayerController);
+		}
+	}
 }

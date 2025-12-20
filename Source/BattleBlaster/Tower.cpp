@@ -24,7 +24,7 @@ void ATower::Tick(float DeltaTime)
 
 void ATower::CheckFireCondition()
 {
-	if (IsInFireRange())
+	if (Tank.IsValid() && IsInFireRange()) 
 	{
 		Fire();
 	}
@@ -32,7 +32,7 @@ void ATower::CheckFireCondition()
 
 bool ATower::IsInFireRange()
 {
-	if (Tank.IsValid())
+	if (Tank.IsValid() && Tank->bPlayerIsAlive)
 	{
 		float DistanceToTank = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
 		return (DistanceToTank <= FireRange);

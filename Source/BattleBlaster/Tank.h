@@ -41,6 +41,9 @@ public:
 	TObjectPtr<UInputMappingContext> DefaultMappingContext = nullptr;
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<APlayerController> PlayerController = nullptr;
+	
+	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction = nullptr;
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -61,7 +64,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TurnRate = 45.f;
 	
+	UPROPERTY(VisibleAnywhere)
+	float bPlayerIsAlive = true;
+	
 	void MoveInput(const FInputActionValue& Value);
 	void TurnInput(const FInputActionValue& Value);
+	
 	void HandleDestruction() override;
+	
+	void SetPlayerEnabled(bool bIsPlayerEnabled);
 };
