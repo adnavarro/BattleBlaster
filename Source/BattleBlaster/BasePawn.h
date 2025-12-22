@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere, Category="Sound Effects")
 	TObjectPtr<USoundBase> DeathSound;
 	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCameraShakeBase> DeathCameraShakeClass;
+	
 	void RotateTurret(FVector LookAtTarget);
 
 	virtual void HandleDestruction();

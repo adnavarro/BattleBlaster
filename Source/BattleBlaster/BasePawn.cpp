@@ -63,6 +63,15 @@ void ABasePawn::HandleDestruction()
 			GetActorLocation()
 			);
 	}
+
+	if (DeathCameraShakeClass)
+	{
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		if (PlayerController)
+		{
+			PlayerController->ClientStartCameraShake(DeathCameraShakeClass);
+		}
+	}
 }
 
 void ABasePawn::Fire()
