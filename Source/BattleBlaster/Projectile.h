@@ -32,11 +32,17 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComp;
 	
-	UPROPERTY(VisibleAnywhere, Category="Effects")
+	UPROPERTY(VisibleAnywhere, Category="Particle Effects")
 	TObjectPtr<UNiagaraComponent> TrailParticles;
 	
-	UPROPERTY(EditAnywhere, Category="Effects")
+	UPROPERTY(EditAnywhere, Category="Particle Effects")
 	TObjectPtr<UNiagaraSystem> HitParticles;
+	
+	UPROPERTY(EditAnywhere, Category="Sound Effects")
+	TObjectPtr<USoundBase> LaunchSound;	
+	
+	UPROPERTY(EditAnywhere, Category="Sound Effects")
+	TObjectPtr<USoundBase> HitSound;
 	
 	UPROPERTY(EditAnywhere)
 	float Damage = 25.f;

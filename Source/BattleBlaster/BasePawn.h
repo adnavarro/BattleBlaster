@@ -34,8 +34,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
 	
-	UPROPERTY(EditAnywhere, Category="Effects")
+	UPROPERTY(EditAnywhere, Category="Particle Effects")
 	TObjectPtr<UNiagaraSystem> DeathParticles;
+	
+	UPROPERTY(EditAnywhere, Category="Sound Effects")
+	TObjectPtr<USoundBase> DeathSound;
 	
 	void RotateTurret(FVector LookAtTarget);
 
