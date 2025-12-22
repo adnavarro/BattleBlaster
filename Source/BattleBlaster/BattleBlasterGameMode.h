@@ -27,10 +27,18 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool bIsVictory = false;
 	
+	UPROPERTY(EditAnywhere)
+	int32 CountDownDelay = 3;
+	
+	int32 CountDownSeconds;
+	
+	FTimerHandle CountDownTimerHandle;
+	
 	TWeakObjectPtr<ATank> Tank;
 	int32 TowerCount;
 	
 	void ActorDied(AActor* DeadActor);
 	
 	void OnGameOverTimerTimeout();
+	void OnCountDownTimerTimeout();
 };

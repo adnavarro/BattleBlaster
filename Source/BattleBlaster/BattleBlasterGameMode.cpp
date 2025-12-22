@@ -40,6 +40,38 @@ void ABattleBlasterGameMode::BeginPlay()
 #endif
 		}
 	}
+	
+	CountDownSeconds = CountDownDelay;
+	GetWorldTimerManager().SetTimer(
+		CountDownTimerHandle,
+		this,
+		&ABattleBlasterGameMode::OnCountDownTimerTimeout,
+		1.f,
+		true
+	);
+}
+
+void ABattleBlasterGameMode::OnCountDownTimerTimeout()
+{
+	
+	--CountDownSeconds;
+	
+	if (CountDownSeconds > 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Game starts in: %d"), CountDownSeconds);
+	}
+	else if (CountDownSeconds == 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("GO!"));
+		if (Tank.IsValid())
+		{
+			Tank->SetPlayerEnabled(true);
+		}
+	}
+	else
+	{
+		GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
+	}
 }
 
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
@@ -100,3 +132,4 @@ void ABattleBlasterGameMode::OnGameOverTimerTimeout()
 		}
 	}
 }
+
