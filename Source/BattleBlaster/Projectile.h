@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -29,6 +31,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComp;
+	
+	UPROPERTY(VisibleAnywhere, Category="Effects")
+	TObjectPtr<UNiagaraComponent> TrailParticles;
+	
+	UPROPERTY(EditAnywhere, Category="Effects")
+	TObjectPtr<UNiagaraSystem> HitParticles;
 	
 	UPROPERTY(EditAnywhere)
 	float Damage = 25.f;

@@ -15,6 +15,9 @@ AProjectile::AProjectile()
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	ProjectileMovementComp->InitialSpeed = 1200.f;
 	ProjectileMovementComp->MaxSpeed = 1200.f;
+	
+	TrailParticles = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Trail Particles"));
+	TrailParticles->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -46,6 +49,16 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 				this,
 				UDamageType::StaticClass()
 				);
+			
+			if (HitParticles)
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+					GetWorld(),
+					HitParticles,
+					GetActorLocation(),
+					GetActorRotation()
+					);
+			}
 		}
 	}
 	Destroy();

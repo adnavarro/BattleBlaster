@@ -119,7 +119,7 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 	{
 		if (ScreenMessageWidget)
 		{
-			FString GameOverString = bIsVictory ? TEXT("You Win!") : TEXT("You Lose :(");
+			FString GameOverString = bIsVictory ? TEXT("You Won!") : TEXT("You Died");
 			ScreenMessageWidget->SetMessageText(GameOverString);
 			ScreenMessageWidget->SetVisibility(ESlateVisibility::Visible);
 		}

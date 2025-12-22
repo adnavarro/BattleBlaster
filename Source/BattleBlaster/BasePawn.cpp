@@ -40,7 +40,19 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::HandleDestruction()
 {
+#if WITH_EDITOR
 	UE_LOG(LogTemp, Display, TEXT("Handle Destruction in Base Pawn"));
+#endif
+
+	if (DeathParticles)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+			GetWorld(),
+			DeathParticles,
+			GetActorLocation(),
+			GetActorRotation()
+			);
+	}
 }
 
 void ABasePawn::Fire()
