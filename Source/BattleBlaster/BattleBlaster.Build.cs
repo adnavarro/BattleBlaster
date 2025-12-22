@@ -15,6 +15,7 @@ public class BattleBlaster : ModuleRules
 				"Engine", 
 				"InputCore",
 				"EnhancedInput",
+				"UMG"
 			});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
