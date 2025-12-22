@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BattleBlasterGameMode.h"
+
+#include "BattleBlasterGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Tower.h"
 #include "Tank.h"
@@ -45,7 +46,6 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 {
 	
 	bool bIsGameOver = false;
-	bool bIsVictory = false;
 	
 	if (DeadActor == Tank)
 	{
@@ -84,6 +84,19 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 
 void ABattleBlasterGameMode::OnGameOverTimerTimeout()
 {
-	FString CurrentLevelName =  UGameplayStatics::GetCurrentLevelName(this);
-	UGameplayStatics::OpenLevel(this, *CurrentLevelName);
+	if (UGameInstance* GameInstance = GetGameInstance())
+	{
+		UBattleBlasterGameInstance* BBGameInstance = Cast<UBattleBlasterGameInstance>(GameInstance);
+		if (BBGameInstance)
+		{
+			if (bIsVictory)
+			{
+				BBGameInstance->LoadNextLevel();
+			}
+			else
+			{
+				BBGameInstance->RestartCurrentLevel();
+			}
+		}
+	}
 }

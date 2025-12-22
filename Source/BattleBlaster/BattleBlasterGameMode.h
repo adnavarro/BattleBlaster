@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float GameOverDelay = 3.f;
 	
+	UPROPERTY(VisibleAnywhere)
+	bool bIsVictory = false;
+	
 	TWeakObjectPtr<ATank> Tank;
 	int32 TowerCount;
 	
