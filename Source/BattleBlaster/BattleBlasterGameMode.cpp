@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Tower.h"
 #include "Tank.h"
+#include "ScreenMessage.h"
 
 void ABattleBlasterGameMode::BeginPlay()
 {
@@ -41,6 +42,17 @@ void ABattleBlasterGameMode::BeginPlay()
 		}
 	}
 	
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController)
+	{
+		ScreenMessageWidget = CreateWidget<UScreenMessage>(PlayerController, ScreenMessageClass);
+		if (ScreenMessageWidget)
+		{
+			ScreenMessageWidget->AddToPlayerScreen();
+			ScreenMessageWidget->SetMessageText(TEXT("Get Ready!"));
+		}
+	}
+	
 	CountDownSeconds = CountDownDelay;
 	GetWorldTimerManager().SetTimer(
 		CountDownTimerHandle,
@@ -54,15 +66,20 @@ void ABattleBlasterGameMode::BeginPlay()
 void ABattleBlasterGameMode::OnCountDownTimerTimeout()
 {
 	
-	--CountDownSeconds;
+	if (!ScreenMessageWidget)
+	{
+		GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
+		return;
+	}
 	
+	--CountDownSeconds;
 	if (CountDownSeconds > 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Game starts in: %d"), CountDownSeconds);
+		ScreenMessageWidget->SetMessageText(FString::FromInt(CountDownSeconds));
 	}
 	else if (CountDownSeconds == 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("GO!"));
+		ScreenMessageWidget->SetMessageText(TEXT("GO!"));
 		if (Tank.IsValid())
 		{
 			Tank->SetPlayerEnabled(true);
@@ -71,6 +88,7 @@ void ABattleBlasterGameMode::OnCountDownTimerTimeout()
 	else
 	{
 		GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
+		ScreenMessageWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
@@ -99,9 +117,12 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 	
 	if (bIsGameOver)
 	{
-		FString GameOverString;
-		bIsVictory ? GameOverString = TEXT("You Win!") : GameOverString = TEXT("You Lose!");
-		UE_LOG(LogTemp, Display, TEXT("%s"), *GameOverString);
+		if (ScreenMessageWidget)
+		{
+			FString GameOverString = bIsVictory ? TEXT("You Win!") : TEXT("You Lose :(");
+			ScreenMessageWidget->SetMessageText(GameOverString);
+			ScreenMessageWidget->SetVisibility(ESlateVisibility::Visible);
+		}
 		
 		FTimerHandle TimerHandle;
 		GetWorldTimerManager().SetTimer(

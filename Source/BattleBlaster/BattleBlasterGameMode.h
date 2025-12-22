@@ -6,8 +6,9 @@
 #include "GameFramework/GameModeBase.h"
 #include "BattleBlasterGameMode.generated.h"
 
-
+// Forward declarations
 class ATank;
+class UScreenMessage;
 /**
  * 
  */
@@ -21,6 +22,12 @@ protected:
 	virtual void BeginPlay() override;
 	
 public:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UScreenMessage> ScreenMessageClass;
+	
+	UPROPERTY()
+	TObjectPtr<UScreenMessage> ScreenMessageWidget;
+	
 	UPROPERTY(EditAnywhere)
 	float GameOverDelay = 3.f;
 	
