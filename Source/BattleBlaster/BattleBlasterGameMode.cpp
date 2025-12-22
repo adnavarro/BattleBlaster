@@ -43,9 +43,14 @@ void ABattleBlasterGameMode::BeginPlay()
 
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 {
+	
+	bool bIsGameOver = false;
+	bool bIsVictory = false;
+	
 	if (DeadActor == Tank)
 	{
 		Tank->HandleDestruction();
+		bIsGameOver = true;
 	}
 	else
 	{
@@ -54,8 +59,16 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 			DeadTower->HandleDestruction();
 			if (--TowerCount == 0)
 			{
-				UE_LOG(LogTemp, Display, TEXT("Game Over! You Win!"));
+				bIsGameOver = true;
+				bIsVictory = true;
 			}
 		}
+	}
+	
+	if (bIsGameOver)
+	{
+		FString GameOverString;
+		bIsVictory ? GameOverString = TEXT("You Win!") : GameOverString = TEXT("You Lose!");
+		UE_LOG(LogTemp, Display, TEXT("%s"), *GameOverString);
 	}
 }
